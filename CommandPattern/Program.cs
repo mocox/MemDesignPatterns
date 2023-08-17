@@ -9,6 +9,7 @@ Console.WriteLine("Hello, this is command pattern demo with calculator!");
 var calculator = new Calculator();
 Console.WriteLine($"Initial value: {calculator.CurrentValue}");
 
+
 var quit = false;
 while (!quit)
 {
@@ -18,7 +19,7 @@ while (!quit)
     
     Console.WriteLine("Enter value:");
     var value = double.Parse(Console.ReadLine() ?? "0");
-
+    
     switch (key)
     {
         case ConsoleKey.OemPlus:
@@ -53,4 +54,5 @@ static ConsoleKey PrintCommands()
 
     Console.WriteLine("Enter Command");
     return Console.ReadKey().Key;
+
 }
