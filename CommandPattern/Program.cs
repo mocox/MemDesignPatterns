@@ -1,9 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using System.Linq.Expressions;
 using CommandPattern;
 
-Console.WriteLine("Hello, this is command pattern demo with calculator!");
+Console.WriteLine("Hello, this is command pattern demo with a simple calculator!");
 
 
 var calculator = new Calculator();
@@ -13,12 +12,22 @@ Console.WriteLine($"Initial value: {calculator.CurrentValue}");
 var quit = false;
 while (!quit)
 {
+    
+    Console.WriteLine($"Running total: {calculator.CurrentValue}");
+    
     //Console.Clear();    
     var key = PrintCommands();
     Console.WriteLine();
+
+    var value = 0.0d;
+    if (key != ConsoleKey.U)
+    {
+        Console.WriteLine("Enter value:");
+        value = double.Parse(Console.ReadLine() ?? "0");
+    }
+
+    Console.WriteLine("Enter Command");
     
-    Console.WriteLine("Enter value:");
-    var value = double.Parse(Console.ReadLine() ?? "0");
     
     switch (key)
     {
@@ -37,10 +46,13 @@ while (!quit)
         case ConsoleKey.Q:
             quit = true;
             break;
+        case ConsoleKey.U:
+            calculator.Undo();
+            break;
     }
-    
-    Console.WriteLine($"Running total: {calculator.CurrentValue}");
 }
+
+
 
 static ConsoleKey PrintCommands()
 {
@@ -50,9 +62,9 @@ static ConsoleKey PrintCommands()
     Console.WriteLine("D Divide");
     Console.WriteLine("+ Addition");
     Console.WriteLine("- Subtraction");
+    Console.WriteLine("U - Undo");
     Console.WriteLine("Q to quit");
-
-    Console.WriteLine("Enter Command");
+    
     return Console.ReadKey().Key;
 
 }
