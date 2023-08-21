@@ -7,48 +7,45 @@ Console.WriteLine("Hello, World!");
 
 var strategies = new Dictionary<ConsoleKey, ICalculateStrategy>
 {
-    {ConsoleKey.NumPad1, new KmToMilesStrategy()},
-    {ConsoleKey.NumPad2, new MilesToKmStrategy()},
-    {ConsoleKey.NumPad3, new CmsToInchesStrategy()},
-    {ConsoleKey.NumPad4, new InchesToCmsStrategy()}
+    {ConsoleKey.D1, new KmToMilesStrategy()},
+    {ConsoleKey.D2, new MilesToKmStrategy()},
+    {ConsoleKey.D3, new CmsToInchesStrategy()},
+    {ConsoleKey.D4, new InchesToCmsStrategy()}
 };
 
 var quit = false;
 while (!quit)
 {
     var key = PrintMenu();
-    if (key == ConsoleKey.Q)
-    {
-        quit = true;
-        Console.WriteLine("Quitting ...");
-    }
-
-    Console.WriteLine();
-    var found = strategies.TryGetValue(key, out var strategy);
-    if (found)
-    {
-        Console.WriteLine($"Converting {strategy!.Name}");
-
-        Console.WriteLine("Enter value to convert: ");
-        var value = double.Parse(Console.ReadLine() ?? "0");
-
-        var converter = new Converter(strategy);
-        var text = converter.Execute(value);
-
-        Console.WriteLine(text);
-    }
-    else
-    {
-        Console.WriteLine("Strategy not found, please try again.");
-    }
-
     if (key != ConsoleKey.Q)
     {
+        Console.WriteLine();
+        var found = strategies.TryGetValue(key, out var strategy);
+        if (found)
+        {
+            Console.WriteLine($"Converting {strategy!.Name}");
+
+            Console.WriteLine("Enter value to convert: ");
+            var value = double.Parse(Console.ReadLine() ?? "0");
+            var converter = new Converter(strategy);
+            var text = converter.Execute(value);
+
+            Console.WriteLine(text);
+        }
+        else
+        {
+            Console.WriteLine("Strategy not found, please try again.");
+        }
+
         Console.WriteLine();
         Console.WriteLine("Press any key to continue!");
         Console.ReadKey();
     }
-
+    else
+    {
+        quit = true;
+        Console.WriteLine("Quitting ...");
+    }
 }
 
 static ConsoleKey PrintMenu()
