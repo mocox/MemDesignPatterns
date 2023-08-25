@@ -2,13 +2,15 @@
 
 namespace DecoratorPattern;
 
-internal class ItemDecorator : IItem
+internal abstract class ItemDecorator : IItem
 {
-    private IItem _item = null!;
+    public string Name { get; set; }
+    private readonly IItem _item;
 
-    public void SetItem(IItem item)
+    protected ItemDecorator(IItem item)
     {
         _item = item;
+        Name = item.Name;
     }
     
     public virtual void AddPrice(double price)
